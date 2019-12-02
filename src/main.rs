@@ -11,6 +11,9 @@ impl LightSensor {
 
     fn dec(&mut self) {
         self.intensity = self.intensity - 2;
+        if self.intensity == 0 {
+            self.status = false;
+        }
     }
 
     fn switch_on(&mut self) {
@@ -26,9 +29,5 @@ impl LightSensor {
 
 fn main() {
    let mut dev_1 = LightSensor {status: false, intensity: 0};
-   println!("{:?}", dev_1);
-   dev_1.switch_on();
-   dev_1.double();
-   println!("{:?}", dev_1);
 
 }
