@@ -15,6 +15,7 @@ impl LightSensor {
         self.intensity = self.intensity - 2;
         if self.intensity == 0 {
             self.status = false;
+            println!("Light turned off");
         }
     }
 
@@ -27,6 +28,11 @@ impl LightSensor {
         self.status = false;
         self.intensity = 0;
     }
+
+    fn check(&self) {
+        println!("");
+        println!("Status = {}\nIntensity = {}", self.status, self.intensity);
+    }
 }
 
 fn main() {
@@ -35,8 +41,8 @@ fn main() {
     println!("Do you want to turn on the light? type 'On'");
     io::stdin().read_line(&mut status);
     let status: String = status.trim().parse().unwrap();
-    match status {
-        On => dev_1.switch_off(),
+    match status.as_ref() {
+        "On" => dev_1.switch_on(),
         _ => panic!("Please enter correct command"),
     }
     loop {
@@ -49,9 +55,12 @@ fn main() {
         let mut status = String::new();
         io::stdin().read_line(&mut status);
         let status: String = status.trim().parse().unwrap();
-        match status {
-            Increase => dev_1.double(),
-            Decrease => dev_1.dec(),
+        match status.as_ref() {
+            "Increase" => dev_1.double(),
+            "Decrease" => dev_1.dec(),
+            "Off" => dev_1.switch_off(),
+            "Check" => dev_1.check(),
+            _ => println!("Enter the right command"),
         }    
     }
 }
