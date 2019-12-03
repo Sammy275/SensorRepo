@@ -39,7 +39,8 @@ fn main() {
     let mut dev_1 = LightSensor {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the light? type 'On'");
-    io::stdin().read_line(&mut status);
+    io::stdin().read_line(&mut status)
+        .expect("Please Enter Command");
     let status: String = status.trim().parse().unwrap();
     match status.as_ref() {
         "On" => dev_1.switch_on(),
@@ -53,7 +54,8 @@ fn main() {
         println!("Type 'Off' to turn of the light");
         println!("Type 'Check' to check the status of device");
         let mut status = String::new();
-        io::stdin().read_line(&mut status);
+        io::stdin().read_line(&mut status)
+            .expect("Enter the command");
         let status: String = status.trim().parse().unwrap();
         match status.as_ref() {
             "Increase" => dev_1.double(),
