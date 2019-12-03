@@ -7,8 +7,24 @@ struct LightSensor {
     status: bool,
     intensity: u32,
 }
+struct FireAlarm {
+    status: bool,
+    intensity: u32,
+}
+struct GateAlarm {
+    status: bool,
+    intensity: u32,
+}
 
-impl LightSensor {
+pub trait Func {
+    fn double(&mut self);
+    fn dec(&mut self);
+    fn switch_on(&mut self);
+    fn switch_off(&mut self);
+    fn check(&mut self);
+}
+
+impl Func for LightSensor {
     fn double(&mut self) {
         self.intensity = self.intensity + 2;
     }
@@ -31,7 +47,7 @@ impl LightSensor {
         self.intensity = 0;
     }
 
-    fn check(&self) {
+    fn check(&mut self) {
         println!("");
         println!("Status = {}\nIntensity = {}", self.status, self.intensity);
     }
@@ -48,6 +64,10 @@ fn main() {
         "signup" => signup(),
         _ => panic!("Please enter the right command"),
     }
+//     let mut dev_1 = LightSensor {status: false, intensity: 0};
+//     dev_1.switch_on();
+//     println!("{:?}", dev_1);
+}
 
 fn signup() {
     println!("Enter your username");
@@ -55,7 +75,7 @@ fn signup() {
     io::stdin().read_line(&mut username)
         .expect("Enter command");
     let username: String = username.trim().parse().unwrap();
-    let filename1 = format!("{}.txt",username);
+    let filename = format!("{}.txt",username);
     File::create(&filename);
     println!("Enter your password");
     let mut pass = String::new();
@@ -64,10 +84,11 @@ fn signup() {
     let pass: String = pass.trim().parse().unwrap();
     fs::write(filename, pass)
         .expect("unable to write to file");
+    login();
 }
 
 fn login() {
-    println!("Enter your username");
+    println!("Please enter your username");
     let mut username = String::new();
     io::stdin().read_line(&mut username)
         .expect("Enter command");
@@ -77,7 +98,7 @@ fn login() {
         Ok(file) => file,
         Err(e) => panic!("Cannot find user"),
     };
-    println!("Enter password");
+    println!("Please enter your  password");
     let mut pass = String::new();
     io::stdin().read_line(&mut pass)
         .expect("Enter password");
@@ -132,4 +153,4 @@ fn login() {
     //         _ => println!("Enter the right command"),
     //     }    
     // }
-}
+// }
