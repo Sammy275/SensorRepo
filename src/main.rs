@@ -1,4 +1,6 @@
 use std::io;
+use std::fs;
+use std::fs::File;
 
 #[derive(Debug)]
 struct LightSensor {
