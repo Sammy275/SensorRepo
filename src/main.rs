@@ -32,7 +32,9 @@ fn signup() -> String {
         .expect("Enter command");
     let username: String = username.trim().parse().unwrap();
     let filename = format!("{}.txt",username);
+    let filename2 = format!("{}dev.txt",username);
     File::create(&filename);
+    File::create(&filename2);
     println!("Enter your password");
     let mut pass = String::new();
     io::stdin().read_line(&mut pass)
@@ -53,6 +55,7 @@ fn login() -> String {
         .expect("Enter command");
     let username: String = username.trim().parse().unwrap();
     let filename = format!("{}.txt",username);
+    let filename2 = format!("{}dev.txt",username);
     let f = match File::open(&filename) {
         Ok(file) => file,
         Err(e) => {
@@ -74,7 +77,7 @@ fn login() -> String {
     else {
         println!("Access granted");
     }    
-    filename
+    filename2
 }
 
 
