@@ -1,6 +1,8 @@
 use std::io;
 use std::fs;
 use std::fs::File;
+use std::process;
+
 
 #[derive(Debug)]
 struct LightSensor {
@@ -62,7 +64,7 @@ fn main() {
     match log.as_ref() {
         "login" => login(),
         "signup" => signup(),
-        _ => panic!("Please enter the right command"),
+        _ => {println!("Please enter the right command"); process::exit(1);},
     }
 //     let mut dev_1 = LightSensor {status: false, intensity: 0};
 //     dev_1.switch_on();
@@ -96,7 +98,10 @@ fn login() {
     let filename = format!("{}.txt",username);
     let f = match File::open(&filename) {
         Ok(file) => file,
-        Err(e) => panic!("Cannot find user"),
+        Err(e) => {
+            println!("The system couldnt find the user");
+            process::exit(1);
+        },
     };
     println!("Please enter your password");
     let mut pass = String::new();
@@ -106,7 +111,8 @@ fn login() {
     let content = fs::read_to_string(filename)
         .expect("Something went wrong");
     if content != pass {
-        panic!("The password does not match");
+        println!("The password does not match");
+        process::exit(1);
     }
     else {
         println!("Access granted");
