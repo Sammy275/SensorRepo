@@ -98,7 +98,7 @@ fn login() {
         Ok(file) => file,
         Err(e) => panic!("Cannot find user"),
     };
-    println!("Please enter your  password");
+    println!("Please enter your password");
     let mut pass = String::new();
     io::stdin().read_line(&mut pass)
         .expect("Enter password");
