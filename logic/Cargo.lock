@@ -4,10 +4,3 @@
 name = "logic"
 version = "0.1.0"
 
-[[package]]
-name = "prac2"
-version = "0.1.0"
-dependencies = [
- "logic 0.1.0",
-]
-
