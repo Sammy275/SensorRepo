@@ -24,7 +24,7 @@ fn main() {
     println!("Your previous logs = {}", content);
     let new_data = process();
     let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "{:?}", new_data);
+    write!(&mut file, "\n{:?}", new_data);
     println!("GoodBye Have A Nice Day");
     // let mut dev_1 = LightSensor {status: false, intensity: 0};
     // dev_1.switch_on();
