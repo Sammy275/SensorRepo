@@ -2,6 +2,9 @@ use std::io;
 use std::fs;
 use std::fs::File;
 use std::process;
+extern crate logic;
+use logic::{LightSensor, FireAlarm, GateAlarm};
+use logic::Func;
 
 fn main() {
     println!("Type 'login' or 'signup'");
@@ -14,9 +17,9 @@ fn main() {
         "signup" => signup(),
         _ => {println!("Please enter the right command"); process::exit(1);},
     }
-//     let mut dev_1 = LightSensor {status: false, intensity: 0};
-//     dev_1.switch_on();
-//     println!("{:?}", dev_1);
+    // let mut dev_1 = LightSensor {status: false, intensity: 0};
+    // dev_1.switch_on();
+    // println!("{:?}", dev_1);
 }
 
 fn signup() {
