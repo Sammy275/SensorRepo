@@ -1,15 +1,15 @@
 #[derive(Debug)]
-struct LightSensor {
-    status: bool,
-    intensity: u32,
+pub struct LightSensor {
+    pub status: bool,
+    pub intensity: u32,
 }
-struct FireAlarm {
-    status: bool,
-    intensity: u32,
+pub struct FireAlarm {
+    pub status: bool,
+    pub intensity: u32,
 }
-struct GateAlarm {
-    status: bool,
-    intensity: u32,
+pub struct GateAlarm {
+    pub status: bool,
+    pub intensity: u32,
 }
 
 pub trait Func {
@@ -19,6 +19,8 @@ pub trait Func {
     fn switch_off(&mut self);
     fn check(&mut self);
 }
+
+// For LightSensor
 
 impl Func for LightSensor {
     fn double(&mut self) {
