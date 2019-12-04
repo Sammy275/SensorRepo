@@ -12,17 +12,20 @@ fn main() {
     io::stdin().read_line(&mut log)
         .expect("Wrong command");
     let log: String = log.trim().parse().unwrap();
-    match log.as_ref() {
+    let mut filename = match log.as_ref() {
         "login" => login(),
         "signup" => signup(),
         _ => {println!("Please enter the right command"); process::exit(1);},
-    }
+    };
+    println!("{}", filename);
     // let mut dev_1 = LightSensor {status: false, intensity: 0};
     // dev_1.switch_on();
     // println!("{:?}", dev_1);
 }
 
-fn signup() {
+
+// sign up functionality
+fn signup() -> String {
     println!("Enter your username");
     let mut username = String::new();
     io::stdin().read_line(&mut username)
@@ -35,12 +38,15 @@ fn signup() {
     io::stdin().read_line(&mut pass)
         .expect("Enter password");
     let pass: String = pass.trim().parse().unwrap();
-    fs::write(filename, pass)
+    fs::write(&filename, pass)
         .expect("unable to write to file");
     login();
+    return filename;
 }
 
-fn login() {
+
+// log in functionality
+fn login() -> String {
     println!("Please enter your username");
     let mut username = String::new();
     io::stdin().read_line(&mut username)
@@ -59,7 +65,7 @@ fn login() {
     io::stdin().read_line(&mut pass)
         .expect("Enter password");
     let pass: String = pass.trim().parse().unwrap();
-    let content = fs::read_to_string(filename)
+    let content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     if content != pass {
         println!("The password does not match");
@@ -68,6 +74,7 @@ fn login() {
     else {
         println!("Access granted");
     }    
+    filename
 }
 
 
