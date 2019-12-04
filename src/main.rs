@@ -17,7 +17,10 @@ fn main() {
         "signup" => signup(),
         _ => {println!("Please enter the right command"); process::exit(1);},
     };
-    println!("{}", filename);
+    println!("");
+    let content = fs::read_to_string(filename)
+        .expect("Something went wrong");
+    println!("Your previous logs {}", content);
     // let mut dev_1 = LightSensor {status: false, intensity: 0};
     // dev_1.switch_on();
     // println!("{:?}", dev_1);
@@ -33,17 +36,20 @@ fn signup() -> String {
     let username: String = username.trim().parse().unwrap();
     let filename = format!("{}.txt",username);
     let filename2 = format!("{}dev.txt",username);
-    File::create(&filename);
-    File::create(&filename2);
     println!("Enter your password");
     let mut pass = String::new();
-    io::stdin().read_line(&mut pass)
-        .expect("Enter password");
+    io::stdin().read_line(&mut pass);
     let pass: String = pass.trim().parse().unwrap();
+    if pass.len() == 0 {
+        println!("Enter password");
+        process::exit(1);
+    }
+    File::create(&filename);
+    File::create(&filename2);
     fs::write(&filename, pass)
         .expect("unable to write to file");
     login();
-    return filename;
+    return filename2;
 }
 
 
