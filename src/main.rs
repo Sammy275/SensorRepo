@@ -24,12 +24,7 @@ fn main() {
         .expect("Something went wrong");
     println!("Your previous logs = {}", content);
     process(filename);
-    // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    // write!(&mut file, "\n{:?}", new_data);
     println!("GoodBye Have A Nice Day");
-    // let mut dev_1 = LightSensor {status: false, intensity: 0};
-    // dev_1.switch_on();
-    // println!("{:?}", dev_1);
 }
 
 
