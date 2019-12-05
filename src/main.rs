@@ -93,6 +93,7 @@ fn login() -> String {
 
 fn process() -> LightSensor {    
     let mut opt = String::new();
+    println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm");
     io::stdin().read_line(&mut opt)
         .expect("Please enter something");
