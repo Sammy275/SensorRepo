@@ -26,7 +26,7 @@ fn main() {
     let mut content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     println!("Your previous logs = {}", content);
-    let new_data = process(&filename);
+    process(filename);
     // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
     // write!(&mut file, "\n{:?}", new_data);
     println!("GoodBye Have A Nice Day");
@@ -95,7 +95,7 @@ fn login() -> String {
     filename2
 }
 
-fn process(filename: &str) {    
+fn process(filename: String) {    
     let mut opt = String::new();
     println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm");
@@ -103,8 +103,8 @@ fn process(filename: &str) {
         .expect("Please enter something");
     let opt: String = opt.trim().parse().unwrap();
     match opt.as_ref() {
-        "1" => light(&filename),
-        "2" => fire(&filename),
+        "1" => light(filename),
+        "2" => fire(filename),
         // "3" => gate(),
         _ => {println!("Enter right number"); process::exit(1)},
     };
@@ -113,7 +113,7 @@ fn process(filename: &str) {
 
 
 
-fn light(filename: &str) {
+fn light(filename: String) {
     let mut dev_1 = LightSensor {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the light? type 'On'");
@@ -147,7 +147,7 @@ fn light(filename: &str) {
 
 
 
-fn fire(&filename: &str) {
+fn fire(filename: String) {
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
