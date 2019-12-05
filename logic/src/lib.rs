@@ -12,6 +12,7 @@ pub struct FireAlarm {
 }
 
 
+#[derive(Debug)]
 pub struct GateAlarm {
     pub status: bool,
     pub intensity: u32,
