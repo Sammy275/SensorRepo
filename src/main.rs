@@ -8,9 +8,6 @@ use logic::Func;
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 
-pub trait Clone {
-    fn clone(&self) -> Self;
-}
 
 fn main() {
     println!("Type 'login' or 'signup'");
@@ -105,7 +102,7 @@ fn process(filename: String) {
     match opt.as_ref() {
         "1" => light(filename),
         "2" => fire(filename),
-        // "3" => gate(),
+        "3" => gate(filename),
         _ => {println!("Enter right number"); process::exit(1)},
     };
 }
@@ -149,6 +146,38 @@ fn light(filename: String) {
 
 fn fire(filename: String) {
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
+    let mut status = String::new();
+    println!("Do you want to turn on the alarm? type 'On'");
+    io::stdin().read_line(&mut status)
+        .expect("Please Enter Command");
+    let status: String = status.trim().parse().unwrap();
+    match status.as_ref() {
+        "On" => dev_1.switch_on(),
+        _ => {println!("Please enter correct command"); process::exit(1)},
+    }
+    loop {
+        println!("");
+        println!("-------------------------------------");
+        println!("Type 'Increase' to increase intensity\nType 'Decrease' to decrease intensity\nType 'Off' to turn of the alarm\nType 'Check' to check the status of device\nType 'Back to return'");
+        let mut status = String::new();
+        io::stdin().read_line(&mut status)
+            .expect("Enter the command");
+        let status: String = status.trim().parse().unwrap();
+        match status.as_ref() {
+            "Increase" => dev_1.double(),
+            "Decrease" => dev_1.dec(),
+            "Off" => dev_1.switch_off(),
+            "Check" => dev_1.check(),
+            "Back" => break,
+            _ => println!("Enter the right command"),
+        }    
+    }
+    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    write!(&mut file, "\n{:?}", dev_1);
+}
+
+fn gate(filename: String) {
+    let mut dev_1 = GateAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
     io::stdin().read_line(&mut status)
