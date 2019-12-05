@@ -3,10 +3,15 @@ pub struct LightSensor {
     pub status: bool,
     pub intensity: u32,
 }
+
+
+#[derive(Debug)]
 pub struct FireAlarm {
     pub status: bool,
     pub intensity: u32,
 }
+
+
 pub struct GateAlarm {
     pub status: bool,
     pub intensity: u32,
