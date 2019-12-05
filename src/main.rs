@@ -26,9 +26,9 @@ fn main() {
     let mut content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     println!("Your previous logs = {}", content);
-    let new_data = process();
-    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", new_data);
+    let new_data = process(&filename);
+    // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    // write!(&mut file, "\n{:?}", new_data);
     println!("GoodBye Have A Nice Day");
     // let mut dev_1 = LightSensor {status: false, intensity: 0};
     // dev_1.switch_on();
@@ -95,26 +95,25 @@ fn login() -> String {
     filename2
 }
 
-fn process<T: Func>() -> T {    
+fn process(filename: &str) {    
     let mut opt = String::new();
     println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm");
     io::stdin().read_line(&mut opt)
         .expect("Please enter something");
     let opt: String = opt.trim().parse().unwrap();
-    let data = match opt.as_ref() {
-        "1" => light(),
-        "2" => fire(),
+    match opt.as_ref() {
+        "1" => light(&filename),
+        "2" => fire(&filename),
         // "3" => gate(),
         _ => {println!("Enter right number"); process::exit(1)},
     };
-    data
 }
 
 
 
 
-fn light() -> LightSensor {
+fn light(filename: &str) {
     let mut dev_1 = LightSensor {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the light? type 'On'");
@@ -142,13 +141,14 @@ fn light() -> LightSensor {
             _ => println!("Enter the right command"),
         }    
     }
-    dev_1
+    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    write!(&mut file, "\n{:?}", dev_1);
 }
 
 
 
-fn fire() -> FireAlarm {
-    let mut dev_1 = fire {status: false, intensity: 0};
+fn fire(&filename: &str) {
+    let mut dev_1 = FireAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
     io::stdin().read_line(&mut status)
@@ -175,5 +175,6 @@ fn fire() -> FireAlarm {
             _ => println!("Enter the right command"),
         }    
     }
-    dev_1
+    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    write!(&mut file, "\n{:?}", dev_1);
 }
