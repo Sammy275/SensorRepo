@@ -87,7 +87,7 @@ impl Func for FireAlarm {
 }
 
 //For Gate Alarm
-impl Func for LightSensor {
+impl Func for GateAlarm {
     fn double(&mut self) {
         self.intensity = self.intensity + 2;
     }
@@ -117,7 +117,7 @@ impl Func for LightSensor {
 }
 
 //For Fire Alarm
-impl Func for GateAlarm {
+impl Func for FireAlarm {
     fn double(&mut self) {
         self.intensity = self.intensity + 2;
     }
