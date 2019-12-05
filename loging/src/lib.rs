@@ -6,7 +6,7 @@ pub mod logs {
     
     
     // sign up functionality
-    fn signup() -> String {
+    pub fn signup() -> String {
         println!("Enter your username");
         let mut username = String::new();
         io::stdin().read_line(&mut username)
@@ -36,7 +36,7 @@ pub mod logs {
 
 
     // log in functionality
-    fn login() -> String {
+    pub fn login() -> String {
         println!("Please enter your username");
         let mut username = String::new();
         io::stdin().read_line(&mut username)
