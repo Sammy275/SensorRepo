@@ -23,15 +23,15 @@ fn main() {
         _ => {println!("Please enter the right command"); process::exit(1);},
     };
     loop {
-    let mut content = fs::read_to_string(&filename)
-        .expect("Something went wrong");
-    println!("Your previous logs = {}", content);
-    process(&filename);
+    // let mut content = fs::read_to_string(&filename)
+    //     .expect("Something went wrong");
+    // println!("Your previous logs = {}", content);
+    process(/*&filename*/);
     }
 }
 
 
-fn process(filename: &String) {    
+fn process(/*filename: &String*/) {    
     let mut opt = String::new();
     println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm\n4: Cancel");
@@ -39,9 +39,9 @@ fn process(filename: &String) {
         .expect("Please enter something");
     let opt: String = opt.trim().parse().unwrap();
     match opt.as_ref() {
-        "1" => light(&filename),
-        "2" => fire(&filename),
-        "3" => gate(&filename),
+        "1" => light(/*&filename*/),
+        "2" => fire(/*&filename*/),
+        "3" => gate(/*&filename*/),
         "4" => {println!("GoodBye Have a Nice Day"); process::exit(5)},
         _ => {println!("Enter right number"); process::exit(1)},
     };
@@ -50,7 +50,7 @@ fn process(filename: &String) {
 
 
 
-fn light(filename: &String) {
+fn light(/*filename: &String*/) {
     let mut dev_1 = LightSensor {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the light? type 'On'");
@@ -78,13 +78,13 @@ fn light(filename: &String) {
             _ => println!("Enter the right command"),
         }    
     }
-    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+    // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    // write!(&mut file, "\n{:?}", dev_1);
 }
 
 
 
-fn fire(filename: &String) {
+fn fire(/*filename: &String*/) {
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
@@ -112,11 +112,11 @@ fn fire(filename: &String) {
             _ => println!("Enter the right command"),
         }    
     }
-    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+//     let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+//     write!(&mut file, "\n{:?}", dev_1);
 }
 
-fn gate(filename: &String) {
+fn gate(/*filename: &String*/) {
     let mut dev_1 = GateAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
@@ -144,6 +144,6 @@ fn gate(filename: &String) {
             _ => println!("Enter the right command"),
         }    
     }
-    let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+    // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+    // write!(&mut file, "\n{:?}", dev_1);
 }
