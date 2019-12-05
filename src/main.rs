@@ -2,6 +2,8 @@ use std::io;
 use std::fs;
 use std::fs::File;
 use std::process;
+extern crate loging;
+use loging::logs;
 extern crate logic;
 use logic::{LightSensor, FireAlarm, GateAlarm};
 use logic::Func;
@@ -16,8 +18,8 @@ fn main() {
         .expect("Wrong command");
     let log: String = log.trim().parse().unwrap();
     let mut filename = match log.as_ref() {
-        "login" => login(),
-        "signup" => signup(),
+        "login" => logs::login(),
+        "signup" => logs::signup(),
         _ => {println!("Please enter the right command"); process::exit(1);},
     };
     loop {
