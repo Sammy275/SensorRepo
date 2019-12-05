@@ -35,6 +35,10 @@ fn signup() -> String {
     io::stdin().read_line(&mut username)
         .expect("Enter command");
     let username: String = username.trim().parse().unwrap();
+    if username.len() == 0 {
+        println!("Enter username");
+        process::exit(1);
+    }
     let filename = format!("{}.txt",username);
     let filename2 = format!("{}dev.txt",username);
     println!("Enter your password");
