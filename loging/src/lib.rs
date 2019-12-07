@@ -6,7 +6,7 @@ pub mod logs {
     
     
     // sign up functionality
-    pub fn signup() -> String {
+    pub fn signup() -> String{
         println!("Enter your username");
         let mut username = String::new();
         io::stdin().read_line(&mut username)
@@ -14,18 +14,22 @@ pub mod logs {
         let username: String = username.trim().parse().unwrap();
         if username.len() == 0 {println!("Enter username"); process::exit(1);}
         let filename = format!("{}.txt",username);
-        let filename2 = format!("{}dev.txt",username);
+        // let filename2 = format!("{}light.txt",username);
+        // let filename3 = format!("{}fire.txt",username);
+        // let filename4 = format!("{}gate.txt",username);
         println!("Enter your password");
         let mut pass = String::new();
         io::stdin().read_line(&mut pass);
         let pass: String = pass.trim().parse().unwrap();
         if pass.len() == 0 {println!("Enter password"); process::exit(1);}
         File::create(&filename);
-        File::create(&filename2);
+        // File::create(&filename2);
+        // File::create(&filename3);
+        // File::create(&filename4);
         fs::write(&filename, pass)
             .expect("unable to write to file");
         login();
-        return filename2;
+        return filename;
     }
 
 
@@ -37,7 +41,7 @@ pub mod logs {
             .expect("Enter command");
         let username: String = username.trim().parse().unwrap();
         let filename = format!("{}.txt",username);
-        let filename2 = format!("{}dev.txt",username);
+        // let filename2 = format!("{}dev.txt",username);
         let f = match File::open(&filename) {
             Ok(file) => file,
             Err(e) => {
@@ -59,7 +63,7 @@ pub mod logs {
         else {
             println!("Access granted");
         }    
-        filename2
+        filename
     }
 
 }
