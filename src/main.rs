@@ -1,6 +1,6 @@
 use std::io;
 use std::fs;
-use std::fs::File;
+
 use std::process;
 extern crate loging;
 use loging::logs;
@@ -17,7 +17,7 @@ fn main() {
     io::stdin().read_line(&mut log)
         .expect("Wrong command");
     let log: String = log.trim().parse().unwrap();
-    let mut filename = match log.as_ref() {
+    let filename = match log.as_ref() {
         "login" => logs::login(),
         "signup" => logs::signup(),
         _ => {println!("Please enter the right command"); process::exit(1);},
@@ -51,7 +51,7 @@ fn process(filename: &String) {
 
 
 fn light(filename: &String) {
-    let mut content = fs::read_to_string(&filename)
+    let content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     println!("{}", content);
     let mut dev_1 = LightSensor {status: false, intensity: 0};
@@ -88,7 +88,7 @@ fn light(filename: &String) {
 
 
 fn fire(filename: &String) {
-    let mut content = fs::read_to_string(&filename)
+    let content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     println!("{}", content);
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
@@ -123,7 +123,7 @@ fn fire(filename: &String) {
 }
 
 fn gate(filename: &String) {
-    let mut content = fs::read_to_string(&filename)
+    let content = fs::read_to_string(&filename)
         .expect("Something went wrong");
     println!("{}", content);
     let mut dev_1 = GateAlarm {status: false, intensity: 0};
