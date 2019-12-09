@@ -29,9 +29,9 @@ fn main() {
 
 
 fn process(filename: &String) { 
-    let filename2 = format!("light{}",filename);
-    let filename3 = format!("fire{}",filename);
-    let filename4 = format!("gate{}",filename);   
+    // let filename2 = format!("light{}",filename);
+    // let filename3 = format!("fire{}",filename);
+    // let filename4 = format!("gate{}",filename);   
     let mut opt = String::new();
     println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm\n4: Cancel");
@@ -39,9 +39,9 @@ fn process(filename: &String) {
         .expect("Please enter something");
     let opt: String = opt.trim().parse().unwrap();
     match opt.as_ref() {
-        "1" => light(&filename2),
-        "2" => fire(&filename3),
-        "3" => gate(&filename4),
+        "1" => light(&filename),
+        "2" => fire(&filename),
+        "3" => gate(&filename),
         "4" => {println!("GoodBye Have a Nice Day"); process::exit(5)},
         _ => {println!("Enter right number"); process::exit(1)},
     };
