@@ -3,6 +3,8 @@ pub mod logs {
     use std::fs;
     use std::fs::File;
     use std::process;
+    use std::fs::OpenOptions;
+    use std::io::prelude::*;
     
     
     // sign up functionality
@@ -28,6 +30,8 @@ pub mod logs {
         // File::create(&filename4);
         fs::write(&filename, pass)
             .expect("unable to write to file");
+        let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+        write!(&mut file, "\n\n");
         login();
         return filename;
     }
@@ -55,7 +59,8 @@ pub mod logs {
             .expect("Enter password");
         let pass: String = pass.trim().parse().unwrap();
         let content = fs::read_to_string(&filename)
-            .expect("Something went wrong");
+            .expect("Something went wrong");   
+        content: String = content.trim().parse().unwrap();
         if content != pass {
             println!("The password does not match");
             process::exit(1);
