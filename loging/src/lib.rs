@@ -3,6 +3,8 @@ pub mod logs {
     use std::fs;
     use std::fs::File;
     use std::process;
+    use std::fs::OpenOptions;
+    use std::io::prelude::*;
     
     
     // sign up functionality
@@ -14,7 +16,10 @@ pub mod logs {
         let username: String = username.trim().parse().unwrap();
         if username.len() == 0 {println!("Enter username"); process::exit(1);}
         let filename = format!("{}.txt",username);
-        // let filename2 = format!("{}light.txt",username);
+        let filename2 = format!("{}dev.txt",username);
+        let mut intro = format!("------------------Logs------------------");
+        let mut file = OpenOptions::new().append(true).create(true).open(&filename2).unwrap();
+        write!(&mut file, "{:?}", intro);
         // let filename3 = format!("{}fire.txt",username);
         // let filename4 = format!("{}gate.txt",username);
         println!("Enter your password");
@@ -28,8 +33,10 @@ pub mod logs {
         // File::create(&filename4);
         fs::write(&filename, pass)
             .expect("unable to write to file");
+        // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+        // write!(&mut file, "\n\n");
         login();
-        return filename;
+        return filename2;
     }
 
 
@@ -55,15 +62,16 @@ pub mod logs {
             .expect("Enter password");
         let pass: String = pass.trim().parse().unwrap();
         let content = fs::read_to_string(&filename)
-            .expect("Something went wrong");
+            .expect("Something went wrong");   
         if content != pass {
             println!("The password does not match");
             process::exit(1);
         }
         else {
             println!("Access granted");
-        }    
-        filename
+        }
+        let filename2 = format!("{}dev.txt",username);    
+        filename2
     }
 
 }
