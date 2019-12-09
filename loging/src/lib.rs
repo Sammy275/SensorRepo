@@ -16,7 +16,10 @@ pub mod logs {
         let username: String = username.trim().parse().unwrap();
         if username.len() == 0 {println!("Enter username"); process::exit(1);}
         let filename = format!("{}.txt",username);
-        // let filename2 = format!("{}light.txt",username);
+        let filename2 = format!("{}dev.txt",username);
+        let mut intro = format!("------------------Logs------------------");
+        let mut file = OpenOptions::new().append(true).create(true).open(&filename2).unwrap();
+        write!(&mut file, "{:?}", intro);
         // let filename3 = format!("{}fire.txt",username);
         // let filename4 = format!("{}gate.txt",username);
         println!("Enter your password");
@@ -33,7 +36,7 @@ pub mod logs {
         // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
         // write!(&mut file, "\n\n");
         login();
-        return filename;
+        return filename2;
     }
 
 
@@ -66,8 +69,9 @@ pub mod logs {
         }
         else {
             println!("Access granted");
-        }    
-        filename
+        }
+        let filename2 = format!("{}dev.txt",username);    
+        filename2
     }
 
 }
