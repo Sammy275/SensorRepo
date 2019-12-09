@@ -30,6 +30,8 @@ pub mod logs {
         // File::create(&filename4);
         fs::write(&filename, pass)
             .expect("unable to write to file");
+        // let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
+        // write!(&mut file, "\n\n");
         login();
         return filename;
     }
