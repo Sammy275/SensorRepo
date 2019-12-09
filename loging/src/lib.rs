@@ -30,8 +30,6 @@ pub mod logs {
         // File::create(&filename4);
         fs::write(&filename, pass)
             .expect("unable to write to file");
-        let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-        write!(&mut file, "\n\n");
         login();
         return filename;
     }
@@ -60,7 +58,6 @@ pub mod logs {
         let pass: String = pass.trim().parse().unwrap();
         let content = fs::read_to_string(&filename)
             .expect("Something went wrong");   
-        content: String = content.trim().parse().unwrap();
         if content != pass {
             println!("The password does not match");
             process::exit(1);
