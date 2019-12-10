@@ -29,9 +29,13 @@ fn main() {
 
 
 fn process(filename: &String) { 
-    // let filename2 = format!("light{}",filename);
-    // let filename3 = format!("fire{}",filename);
-    // let filename4 = format!("gate{}",filename);   
+    let content = fs::read_to_string(&filename)
+    .expect("Something went wrong");
+    let mut vec: Vec<&str> = content.trim().split('\n').collect();
+    println!("--------------------Logs--------------------");
+    for i in (1..vec.len()) {
+        println!("{:?}", vec[i]);
+    }   
     let mut opt = String::new();
     println!("Please select anyone");
     println!("1: Light sensor\n2: Fire Alarm\n3: Gate Alarm\n4: Cancel");
@@ -51,9 +55,6 @@ fn process(filename: &String) {
 
 
 fn light(filename: &String) {
-    let content = fs::read_to_string(&filename)
-        .expect("Something went wrong");
-    println!("{}", content);
     let mut dev_1 = LightSensor {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the light? type 'On'");
@@ -88,9 +89,6 @@ fn light(filename: &String) {
 
 
 fn fire(filename: &String) {
-    let content = fs::read_to_string(&filename)
-        .expect("Something went wrong");
-    println!("{}", content);
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
@@ -123,9 +121,6 @@ fn fire(filename: &String) {
 }
 
 fn gate(filename: &String) {
-    let content = fs::read_to_string(&filename)
-        .expect("Something went wrong");
-    println!("{}", content);
     let mut dev_1 = GateAlarm {status: false, intensity: 0};
     let mut status = String::new();
     println!("Do you want to turn on the alarm? type 'On'");
