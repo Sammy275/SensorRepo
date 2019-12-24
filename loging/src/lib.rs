@@ -20,7 +20,7 @@ pub mod logs {
         let mut pass = String::new();
         io::stdin().read_line(&mut pass);
         let pass: String = pass.trim().parse().unwrap();
-        if pass.len() == 0 {println!("Enter password"); process::exit(1);}
+        if pass.len() == 0 {println!("Enter password"); thread::sleep(Duration::from_secs(1)); process::exit(1);}
         File::create(&filename);
         fs::write(&filename, pass)
             .expect("unable to write to file");
@@ -40,7 +40,7 @@ pub mod logs {
         let file = match File::open(&filename) {
             Ok(file) => file,
             Err(_) => {
-                println!("The system couldnt find the user");
+                println!("The system couldnt find the user: exiting");
                 thread::sleep(Duration::from_secs(2));
                 process::exit(1)    ;
             },
@@ -58,7 +58,7 @@ pub mod logs {
             println!("Access Granted");
         }
         else {
-            println!("The password does not match");
+            println!("The password does not match: exiting");
             thread::sleep(Duration::from_secs(1));
             process::exit(1);
         }    
