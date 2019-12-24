@@ -1,5 +1,7 @@
 use std::io;
 use std::fs;
+use std::thread;
+use std::time::Duration;
 
 use std::process;
 extern crate loging;
@@ -12,7 +14,8 @@ use std::io::prelude::*;
 
 
 fn main() {
-    println!("Type 'login' or 'signup'");
+    loop {
+    println!("Type 'login' or 'signup' or 'quit' to exit");
     let mut log = String::new();
     io::stdin().read_line(&mut log)
         .expect("Wrong command");
@@ -20,10 +23,12 @@ fn main() {
     let filename = match log.as_ref() {
         "login" => logs::login(),
         "signup" => logs::signup(),
-        _ => {println!("Please enter the right command"); process::exit(1);},
+        "quit" => {println!("GoodBye!!!"); thread::sleep(Duration::from_secs(2)); process::exit(0);},
+        _ => {println!("Please enter the right command"); continue;},
     };
     loop {
     process(&filename);
+    }
     }
 }
 
