@@ -4,7 +4,7 @@ pub mod logs {
     use std::fs;
     use std::fs::File;
     use std::process;
-    use std::fs::OpenOptions;
+    
     use std::io::{self, prelude::*, BufReader};    
     
     // sign up functionality
@@ -45,7 +45,7 @@ pub mod logs {
                 process::exit(1)    ;
             },
         };
-        let reader = BufReader::new(file);
+        let _reader = BufReader::new(file);
         println!("Please enter your password");
         let mut pass = String::new();
         io::stdin().read_line(&mut pass)
