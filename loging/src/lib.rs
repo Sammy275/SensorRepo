@@ -6,7 +6,7 @@ pub mod logs {
     use std::process;
     
     use std::io::{self, prelude::*, BufReader};    
-        
+    
     // sign up functionality
     pub fn signup() -> String{
         println!("Enter your username");
