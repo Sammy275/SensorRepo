@@ -1,8 +1,10 @@
 pub mod logs {
+    use std::thread;
+    use std::time::Duration;
     use std::fs;
     use std::fs::File;
     use std::process;
-    use std::fs::OpenOptions;
+    
     use std::io::{self, prelude::*, BufReader};    
     
     // sign up functionality
@@ -12,13 +14,13 @@ pub mod logs {
         io::stdin().read_line(&mut username)
             .expect("Enter command");
         let username: String = username.trim().parse().unwrap();
-        if username.len() == 0 {println!("Enter username"); process::exit(1);}
+        if username.len() == 0 {println!("Enter username"); thread::sleep(Duration::from_secs(1)); process::exit(1);}
         let filename = format!("{}.txt",username);
         println!("Enter your password");
         let mut pass = String::new();
         io::stdin().read_line(&mut pass);
         let pass: String = pass.trim().parse().unwrap();
-        if pass.len() == 0 {println!("Enter password"); process::exit(1);}
+        if pass.len() == 0 {println!("Enter password"); thread::sleep(Duration::from_secs(1)); process::exit(1);}
         File::create(&filename);
         fs::write(&filename, pass)
             .expect("unable to write to file");
@@ -37,12 +39,13 @@ pub mod logs {
         let filename = format!("{}.txt",username);
         let file = match File::open(&filename) {
             Ok(file) => file,
-            Err(e) => {
-                println!("The system couldnt find the user");
-                process::exit(1);
+            Err(_) => {
+                println!("The system couldnt find the user: exiting");
+                thread::sleep(Duration::from_secs(2));
+                process::exit(1)    ;
             },
         };
-        let reader = BufReader::new(file);
+        let _reader = BufReader::new(file);
         println!("Please enter your password");
         let mut pass = String::new();
         io::stdin().read_line(&mut pass)
@@ -50,12 +53,13 @@ pub mod logs {
         let pass: String = pass.trim().parse().unwrap();
         let content: String = fs::read_to_string(&filename)
             .expect("Something went wrong");
-        let mut vec: Vec<&str> = content.trim().split('\n').collect();
+        let vec: Vec<&str> = content.trim().split('\n').collect();
         if vec[0] == pass {
             println!("Access Granted");
         }
         else {
-            println!("The password does not match");
+            println!("The password does not match: exiting");
+            thread::sleep(Duration::from_secs(1));
             process::exit(1);
         }    
         filename

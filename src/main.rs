@@ -1,5 +1,7 @@
 use std::io;
 use std::fs;
+use std::thread;
+use std::time::Duration;
 
 use std::process;
 extern crate loging;
@@ -12,7 +14,8 @@ use std::io::prelude::*;
 
 
 fn main() {
-    println!("Type 'login' or 'signup'");
+    loop {
+    println!("\nType 'login' or 'signup' or 'quit' to exit");
     let mut log = String::new();
     io::stdin().read_line(&mut log)
         .expect("Wrong command");
@@ -20,10 +23,12 @@ fn main() {
     let filename = match log.as_ref() {
         "login" => logs::login(),
         "signup" => logs::signup(),
-        _ => {println!("Please enter the right command"); process::exit(1);},
+        "quit" => {println!("\nGoodBye!!!"); thread::sleep(Duration::from_secs(2)); process::exit(0);},
+        _ => {println!("\nPlease enter the right command"); continue;},
     };
     loop {
     process(&filename);
+    }
     }
 }
 
@@ -31,9 +36,9 @@ fn main() {
 fn process(filename: &String) { 
     let content = fs::read_to_string(&filename)
     .expect("Something went wrong");
-    let mut vec: Vec<&str> = content.trim().split('\n').collect();
+    let vec: Vec<&str> = content.trim().split('\n').collect();
     println!("--------------------Logs--------------------");
-    for i in (1..vec.len()) {
+    for i in 1..vec.len() {
         println!("{:?}", vec[i]);
     }   
     let mut opt = String::new();
@@ -46,8 +51,8 @@ fn process(filename: &String) {
         "1" => light(&filename),
         "2" => fire(&filename),
         "3" => gate(&filename),
-        "4" => {println!("GoodBye Have a Nice Day"); process::exit(5)},
-        _ => {println!("Enter right number"); process::exit(1)},
+        "4" => {println!("GoodBye Have a Nice Day"); thread::sleep(Duration::from_secs(2)); main()},
+        _ => {println!("Enter right number"); thread::sleep(Duration::from_secs(1));},
     };
 }
 
@@ -56,14 +61,16 @@ fn process(filename: &String) {
 
 fn light(filename: &String) {
     let mut dev_1 = LightSensor {status: false, intensity: 0};
-    let mut status = String::new();
+    loop {
     println!("Do you want to turn on the light? type 'On'");
+    let mut status = String::new();
     io::stdin().read_line(&mut status)
         .expect("Please Enter Command");
     let status: String = status.trim().parse().unwrap();
     match status.as_ref() {
-        "On" => dev_1.switch_on(),
-        _ => {println!("Please enter correct command"); process::exit(1)},
+        "On" => {dev_1.switch_on(); break;},
+        _ => {println!("Please enter correct command"); thread::sleep(Duration::from_secs(1)); continue;},
+    }
     }
     loop {
         println!("");
@@ -83,21 +90,26 @@ fn light(filename: &String) {
         }    
     }
     let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+    match write!(&mut file, "\n{:?}", dev_1) {
+        Ok(r) => r,
+        Err(_) => panic!("Error occured "),
+    };
 }
 
 
 
 fn fire(filename: &String) {
     let mut dev_1 = FireAlarm {status: false, intensity: 0};
-    let mut status = String::new();
-    println!("Do you want to turn on the alarm? type 'On'");
-    io::stdin().read_line(&mut status)
-        .expect("Please Enter Command");
-    let status: String = status.trim().parse().unwrap();
-    match status.as_ref() {
-        "On" => dev_1.switch_on(),
-        _ => {println!("Please enter correct command"); process::exit(1)},
+    loop {
+        println!("Do you want to turn on the light? type 'On'");
+        let mut status = String::new();
+        io::stdin().read_line(&mut status)
+            .expect("Please Enter Command");
+        let status: String = status.trim().parse().unwrap();
+        match status.as_ref() {
+            "On" => {dev_1.switch_on(); break;},
+            _ => {println!("Please enter correct command"); thread::sleep(Duration::from_secs(1)); continue;},
+        }
     }
     loop {
         println!("");
@@ -117,19 +129,24 @@ fn fire(filename: &String) {
         }    
     }
     let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+    match write!(&mut file, "\n{:?}", dev_1) {
+        Ok(r) => r,
+        Err(_) => panic!("Error occured "),
+    };
 }
 
 fn gate(filename: &String) {
     let mut dev_1 = GateAlarm {status: false, intensity: 0};
-    let mut status = String::new();
-    println!("Do you want to turn on the alarm? type 'On'");
-    io::stdin().read_line(&mut status)
-        .expect("Please Enter Command");
-    let status: String = status.trim().parse().unwrap();
-    match status.as_ref() {
-        "On" => dev_1.switch_on(),
-        _ => {println!("Please enter correct command"); process::exit(1)},
+    loop {
+        println!("Do you want to turn on the light? type 'On'");
+        let mut status = String::new();
+        io::stdin().read_line(&mut status)
+            .expect("Please Enter Command");
+        let status: String = status.trim().parse().unwrap();
+        match status.as_ref() {
+            "On" => {dev_1.switch_on(); break;},
+            _ => {println!("Please enter correct command"); thread::sleep(Duration::from_secs(1)); continue;},
+        }
     }
     loop {
         println!("");
@@ -149,5 +166,8 @@ fn gate(filename: &String) {
         }    
     }
     let mut file = OpenOptions::new().append(true).create(true).open(&filename).unwrap();
-    write!(&mut file, "\n{:?}", dev_1);
+    match write!(&mut file, "\n{:?}", dev_1) {
+        Ok(r) => r,
+        Err(_) => panic!("Error occured "),
+    };
 }
