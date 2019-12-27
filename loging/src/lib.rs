@@ -5,8 +5,8 @@ pub mod logs {
     use std::fs::File;
     use std::process;
     
-    use std::io::{self, prelude::*, BufReader};    
-    
+    use std::io::{self, prelude::*, BufReader};
+
     // sign up functionality
     pub fn signup() -> String{
         println!("Enter your username");
@@ -42,7 +42,7 @@ pub mod logs {
             Err(_) => {
                 println!("The system couldnt find the user: exiting");
                 thread::sleep(Duration::from_secs(2));
-                process::exit(1)    ;
+                process::exit(1);
             },
         };
         let _reader = BufReader::new(file);

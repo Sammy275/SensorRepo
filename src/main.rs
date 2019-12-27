@@ -13,7 +13,7 @@ use std::fs::OpenOptions;
 use std::io::prelude::*;
 
 
-fn main() {
+pub fn main() {
     loop {
     println!("\nType 'login' or 'signup' or 'quit' to exit");
     let mut log = String::new();
