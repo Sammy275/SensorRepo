@@ -31,22 +31,29 @@ pub mod logs {
 
     // log in functionality
     pub fn login() -> String {
+        let file;
+        let mut filename;
         println!("Please enter your username");
+        loop {
         let mut username = String::new();
         io::stdin().read_line(&mut username)
             .expect("Enter command");
         let username: String = username.trim().parse().unwrap();
-        let filename = format!("{}.txt",username);
-        let file = match File::open(&filename) {
+        filename = format!("{}.txt",username);
+        file = match File::open(&filename) {
             Ok(file) => file,
             Err(_) => {
-                println!("The system couldnt find the user: exiting");
-                thread::sleep(Duration::from_secs(2));
-                process::exit(1);
+                println!("The system couldnt find the user, Enter again");
+                thread::sleep(Duration::from_secs(1));
+                // process::exit(1);
+                continue;
             },
         };
+        break;
+        }
         let _reader = BufReader::new(file);
         println!("Please enter your password");
+        loop {
         let mut pass = String::new();
         io::stdin().read_line(&mut pass)
             .expect("Enter password");
@@ -58,9 +65,12 @@ pub mod logs {
             println!("Access Granted");
         }
         else {
-            println!("The password does not match: exiting");
+            println!("The password does not match, Enter again");
             thread::sleep(Duration::from_secs(1));
-            process::exit(1);
+            continue;
+            // process::exit(1);
+        }
+        break;
         }    
         filename
     }
